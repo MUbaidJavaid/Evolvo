@@ -173,10 +173,10 @@ export default function HiringPage () {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className='container mx-auto px-4 py-20'
+              className='container mx-auto px-4 py-10'
             >
               {/* Hero Section */}
-              <div className='text-center max-w-4xl mx-auto mb-20'>
+              <div className='text-center max-w-4xl mx-auto mb-32'>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -214,7 +214,7 @@ export default function HiringPage () {
               </div>
 
               {/* Role Cards */}
-              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto'>
+              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl my-6 mx-auto'>
                 {jobRoles.map((role, index) => {
                   const Icon = role.icon
                   return (
