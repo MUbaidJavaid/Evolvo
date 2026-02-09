@@ -1,17 +1,12 @@
 'use client'
 
+import ApplicationForm from '@/components/application-form'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
 import { getJobById } from '@/lib/jobs'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense, lazy } from 'react'
-
-// Dynamic import for performance optimization
-const GoogleFormEmbed = lazy(() => import('@/components/google-form-embed'))
 
 interface JobPageClientProps {
   job: {
@@ -32,11 +27,11 @@ export default function JobPageClient ({ job }: JobPageClientProps) {
   return (
     <div className='min-h-screen bg-background text-foreground overflow-hidden'>
       {/* Animated background gradient */}
-      <div className='fixed inset-0 bg-gradient-to-br from-accent/5 via-background to-background' />
-      <div className='fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent' />
+      <div className='fixed inset-0 bg-linear-to-br from-accent/5 via-background to-background' />
+      <div className='fixed inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent' />
 
       {/* Grid pattern overlay */}
-      <div className='fixed inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]' />
+      <div className='fixed inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[4rem_4rem]' />
 
       <div className='relative'>
         {/* Header */}
@@ -118,7 +113,7 @@ export default function JobPageClient ({ job }: JobPageClientProps) {
                 <div className='relative'>
                   <div className='absolute inset-0 bg-accent/20 blur-2xl rounded-full' />
                   <div className='relative bg-accent/10 p-6 rounded-3xl border border-accent/20'>
-                    <Icon className='w-12 h-12 text-accent' />
+                    {Icon ? <Icon className='w-12 h-12 text-accent' /> : null}
                   </div>
                 </div>
               </div>
@@ -131,37 +126,14 @@ export default function JobPageClient ({ job }: JobPageClientProps) {
               </p>
             </motion.div>
 
-            {/* Google Form Embed with Glassmorphism */}
+            {/* Inline Application Form */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               className='relative'
             >
-              <Card className='overflow-hidden bg-card/30 backdrop-blur-xl border-border/50 shadow-2xl'>
-                <div className='absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent pointer-events-none' />
-
-                <div className='relative p-2 md:p-4'>
-                  <Suspense
-                    fallback={
-                      <div className='w-full h-[800px] flex items-center justify-center bg-muted/20 rounded-lg'>
-                        <div className='text-center'>
-                          <Spinner className='mx-auto mb-4 text-accent' />
-                          <p className='text-muted-foreground'>
-                            Loading application form...
-                          </p>
-                        </div>
-                      </div>
-                    }
-                  >
-                    <GoogleFormEmbed
-                      url={job.formUrl}
-                      jobTitle={job.title}
-                      description={job.description}
-                    />
-                  </Suspense>
-                </div>
-              </Card>
+              <ApplicationForm role={job.id} />
             </motion.div>
           </div>
         </motion.main>
